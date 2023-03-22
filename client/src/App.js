@@ -2,6 +2,7 @@ import "./App.css";
 import "./styles.css";
 import Students from "./components/students";
 import ListSightings from "./components/ListSightings";
+import AddSighting from "./components/AddSighting";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <h1>Animal Sighting Tracker</h1>
       </header>
       <main>
+        <AddSighting />
         <ListSightings />
       </main>
       {/* <Students /> */}
