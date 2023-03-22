@@ -1,0 +1,73 @@
+/* GLOBAL STYLING */
+* {
+  box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
+}
+
+html {
+  /* 1rem = 10px */
+  font-size: 62.5%;
+}
+
+body {
+  /* 16px */
+  font-size: 1.6rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+main {
+  width: 95%;
+  margin: auto;
+}
+
+.btn {
+  border-radius: 10px;
+  padding: 5px 10px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+/* HEADER */
+
+header {
+  text-decoration: underline;
+}
+
+/* LIST EVENTS COMPONENT TABLE STYLING */
+
+table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+/* only border on the bottom of every row */
+tr {
+  border-bottom: 1px solid #ddd;
+  height: 55px;
+}
+
+tr:nth-child(even) {
+  background-color: #eeeeee;
+}
+
+tr:hover {
+  background-color: #82c3ec;
+}
+
+.col {
+  width: 13%;
+}
+
+.col-details,
+.col-delete {
+  width: 8%;
+}
