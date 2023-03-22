@@ -31,7 +31,7 @@ main {
 
 /* HEADER */
 header {
-  height: 15vh;
+  height: 120px;
   text-decoration: underline;
   position: sticky;
   top: 0;
@@ -40,19 +40,19 @@ header {
 }
 
 h1 {
-  padding: calc(10vh / 2);
+  padding: 40px;
 }
 
 /* LIST EVENTS COMPONENT TABLE STYLING */
 
 thead tr {
-  height: 10vh;
+  height: 75px;
 }
 
 thead {
   background-color: darkgray;
   position: sticky;
-  top: 15vh;
+  top: 120px;
 }
 
 table {
@@ -92,4 +92,14 @@ tr:hover {
 .col-details,
 .col-delete {
   width: 8%;
+}
+
+/* BUTTON ADD */
+
+.btn-add {
+  position: fixed;
+  z-index: 1;
+  top: 40px;
+  transform: translate(0%, 25%);
+  left: 105px;
 }
