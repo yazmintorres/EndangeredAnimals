@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js", 
-    "dev": " concurrently 'npm start' 'cd .. && cd client && npm start' "
+    "server": "nodemon server.js",
+    "dev": " concurrently 'nodemon start' 'cd .. && cd client && nodemon start' "
   },
   "author": "",
   "license": "ISC",
