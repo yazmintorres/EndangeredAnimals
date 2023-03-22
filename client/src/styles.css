@@ -1,8 +1,8 @@
 /* GLOBAL STYLING */
 * {
   box-sizing: border-box;
-  /* margin: 0;
-  padding: 0; */
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -30,12 +30,30 @@ main {
 }
 
 /* HEADER */
-
 header {
+  height: 15vh;
   text-decoration: underline;
+  position: sticky;
+  top: 0;
+  background-color: black;
+  color: white;
+}
+
+h1 {
+  padding: calc(10vh / 2);
 }
 
 /* LIST EVENTS COMPONENT TABLE STYLING */
+
+thead tr {
+  height: 10vh;
+}
+
+thead {
+  background-color: darkgray;
+  position: sticky;
+  top: 15vh;
+}
 
 table {
   width: 100%;
@@ -47,6 +65,10 @@ table {
 th,
 td {
   border: 1px solid #ddd;
+}
+
+th {
+  border-top: none;
 }
 
 /* only border on the bottom of every row */
