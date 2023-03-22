@@ -12,7 +12,7 @@ function SightingRow({
       <td>{commonName}</td>
       <td>{isHealthy ? "Healthy" : "Unhealthy"}</td>
       <td>{location}</td>
-      <td>{lastSeen}</td>
+      <td>{new Date(lastSeen).toLocaleString()}</td>
       <td>
         <button>Details</button>
       </td>
