@@ -14,10 +14,10 @@ function SightingRow({
       <td>{location}</td>
       <td>{new Date(lastSeen).toLocaleString()}</td>
       <td>
-        <button>Details</button>
+        <button className="btn btn-details">Details</button>
       </td>
       <td>
-        <button>Delete</button>
+        <button className="btn btn-delete">Delete</button>
       </td>
     </tr>
   );
