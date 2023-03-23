@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 
 const SightingForm = ({ setShow }) => {
-  // create a state to keep track of the species the user selects
-
+  // create a state to keep track of the species and specific individual the user selects --> these are id numbers
   const [selectedSpecies, setSelectedSpecies] = useState(null);
+  const [selectedIndividual, setSelectedIndividual] = useState(null);
 
-  // get all species information
+  // get all species and individuals of a certain species information --> these are arrays
   const [species, setSpecies] = useState([]);
   const [individualsOfSpecies, setIndividualsOfSpecies] = useState([]);
 
+  // get species on first render
   const getSpecies = async () => {
     const response = await fetch("http://localhost:8080/api/species");
     const species = await response.json();
     setSpecies(species);
   };
 
-  // call getSpecies on first render
   useEffect(() => {
     getSpecies();
   }, []);
@@ -23,13 +23,19 @@ const SightingForm = ({ setShow }) => {
   // when selectedSpecies is updated, make this request
   // get all individuals of a specific species type when the selectedSpecies state is updated
   useEffect(async () => {
-    const response = await fetch(
-      `http://localhost:8080/api/individuals/${selectedSpecies}`
-    );
-    const individuals = await response.json();
-    console.log(individuals);
-    setIndividualsOfSpecies(individuals);
+    if (selectedSpecies) {
+      const response = await fetch(
+        `http://localhost:8080/api/individuals/${selectedSpecies}`
+      );
+      const individuals = await response.json();
+      console.log(individuals);
+      setIndividualsOfSpecies(individuals);
+    }
   }, [selectedSpecies]);
+
+  useEffect(() => {
+    console.log(selectedIndividual);
+  }, [selectedIndividual]);
 
   // handle Input
   const handleChange = (eventProperty) => {
@@ -65,7 +71,11 @@ const SightingForm = ({ setShow }) => {
               </div>
               <div className="nick-name-form">
                 <label htmlFor="nick-name">Nick Name:</label>
-                <select name="nickName" id="nick-name">
+                <select
+                  name="nickName"
+                  id="nick-name"
+                  onChange={(e) => setSelectedIndividual(e.target.value)}
+                >
                   <option value="null">Select One</option>
                   {individualsOfSpecies.map((ind) => (
                     <option key={ind.individual_id} value={ind.individual_id}>
@@ -73,6 +83,24 @@ const SightingForm = ({ setShow }) => {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div className="health-form">
+                <label htmlFor="health">Health Status</label>
+                <select name="health" id="health">
+                  <option value="null">Select One</option>
+                  <option value="healthy">Healthy</option>
+                  <option value="unhealthy">Unhealthy</option>
+                </select>
+              </div>
+
+              {/* INPUT OF TYPE DATETIME-LOCAL */}
+              <div className="date-time-form">
+                <label htmlFor="date-time">Date and time of last seen</label>
+                <input
+                  type="datetime-local"
+                  // how do i restrict user from inputting a time later than the current time?
+                  max={new Date().toISOString().slice(0, -8)}
+                />
               </div>
             </fieldset>
             <div className="modal-footer">
