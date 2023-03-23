@@ -179,6 +179,7 @@ input {
   border: 1px solid black;
   padding: 10px 15px;
   margin: 15px auto;
+  margin-top: 5px;
   font-size: 14px;
   text-align: center;
 }
