@@ -27,13 +27,14 @@ app.get("/api/sightings", async (req, res) => {
   }
 });
 
-// create the get request
-app.get("/api/students", cors(), async (req, res) => {
+// get species
+
+app.get("/api/species", async (req, res) => {
   try {
-    const { rows: students } = await db.query("SELECT * FROM students");
-    res.send(students);
-  } catch (e) {
-    return res.status(400).json({ e });
+    const allSpecies = await db.query("SELECT * FROM species");
+    res.json(allSpecies.rows);
+  } catch (error) {
+    console.error(error.message);
   }
 });
 
