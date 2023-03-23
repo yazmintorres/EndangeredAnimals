@@ -9,7 +9,6 @@ function ListSightings() {
       const response = await fetch("http://localhost:8080/api/sightings");
       const sightings = await response.json();
       setSightings(sightings);
-      console.log(sightings);
     } catch (error) {
       console.error(error.message);
     }
