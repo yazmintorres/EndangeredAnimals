@@ -38,7 +38,7 @@ app.get("/api/species", async (req, res) => {
   }
 });
 
-// get individuals of a specific species type
+// get individuals of a specific species
 app.get("/api/individuals/:species_id", async (req, res) => {
   const { species_id } = req.params;
   try {
