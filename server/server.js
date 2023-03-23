@@ -27,12 +27,26 @@ app.get("/api/sightings", async (req, res) => {
   }
 });
 
-// get species
+// get all species
 
 app.get("/api/species", async (req, res) => {
   try {
     const allSpecies = await db.query("SELECT * FROM species");
     res.json(allSpecies.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// get individuals of a specific species type
+app.get("/api/individuals/:species_id", async (req, res) => {
+  const { species_id } = req.params;
+  try {
+    const individualsOfSpecies = await db.query(
+      "SELECT * FROM individuals WHERE species_id = $1",
+      [species_id]
+    );
+    res.json(individualsOfSpecies.rows);
   } catch (error) {
     console.error(error.message);
   }
