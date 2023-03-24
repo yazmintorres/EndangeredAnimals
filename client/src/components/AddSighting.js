@@ -6,12 +6,34 @@ function AddSighting() {
 
   const handleAddClick = () => setShow(!show);
 
+  const addSighting = async (e, newSighting) => {
+    console.log(newSighting);
+    try {
+      e.preventDefault();
+      const body = newSighting;
+      const addSighting = await fetch(
+        "http://localhost:8080/api/sighting/add",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
+      console.log(addSighting);
+      window.location = "/";
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <>
       <button onClick={handleAddClick} className="btn btn-add">
         Add Sighting
       </button>
-      {show ? <SightingForm setShow={setShow} /> : null}
+      {show ? (
+        <SightingForm setShow={setShow} addSighting={addSighting} />
+      ) : null}
     </>
   );
 }

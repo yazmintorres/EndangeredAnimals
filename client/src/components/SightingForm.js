@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 
-const SightingForm = ({ setShow }) => {
-  // create a state to keep track of the species and specific individual the user selects --> these are id numbers
+const SightingForm = ({ setShow, addSighting }) => {
+  // create addSighting object to track user input
+
+  const [newSighting, setNewSighting] = useState({
+    date_time: "",
+    individual_id: "",
+    location: "",
+    healthy: "",
+    email: "",
+  });
+
+  // create a state to keep track of the species -> this will store species_id number
   const [selectedSpecies, setSelectedSpecies] = useState(null);
-  const [selectedIndividual, setSelectedIndividual] = useState(null);
 
   // get all species and individuals of a certain species information --> these are arrays
   const [species, setSpecies] = useState([]);
@@ -22,27 +31,33 @@ const SightingForm = ({ setShow }) => {
 
   // when selectedSpecies is updated, make this request
   // get all individuals of a specific species type when the selectedSpecies state is updated
-  useEffect(async () => {
-    if (selectedSpecies) {
+  useEffect(() => {
+    const getIndividualsOfSpecies = async () => {
       const response = await fetch(
         `http://localhost:8080/api/individuals/${selectedSpecies}`
       );
       const individuals = await response.json();
       console.log(individuals);
       setIndividualsOfSpecies(individuals);
+    };
+
+    if (selectedSpecies) {
+      getIndividualsOfSpecies();
+    } else {
+      setIndividualsOfSpecies([]);
     }
   }, [selectedSpecies]);
 
-  useEffect(() => {
-    console.log(selectedIndividual);
-  }, [selectedIndividual]);
-
   // handle Input
-  const handleChange = (eventProperty) => {
+  const handleChange = (sightingProperty) => {
     return (e) => {
       console.log(e.target);
+      console.log(e.target.value);
+      setNewSighting({ ...newSighting, [sightingProperty]: e.target.value });
     };
   };
+
+  useEffect(() => console.log(newSighting), [newSighting]);
 
   return (
     <div className="modal">
@@ -51,15 +66,16 @@ const SightingForm = ({ setShow }) => {
           <h3 className="modal-title">Add Sighting Information</h3>
         </div>
         <div className="modal-body">
-          <form>
+          <form onSubmit={(e) => addSighting(e, newSighting)}>
             <fieldset>
-              <legend>Please enter the individual information</legend>
+              <legend>Please enter the individual animal information</legend>
               <div className="common-name-form">
                 <label htmlFor="common-name">Select Common Name:</label>
                 <select
                   name="commonName"
                   id="common-name"
                   onChange={(e) => setSelectedSpecies(e.target.value)}
+                  required
                 >
                   <option value="null">Select One</option>
                   {species.map((s) => (
@@ -69,12 +85,16 @@ const SightingForm = ({ setShow }) => {
                   ))}
                 </select>
               </div>
+
+              {/* nickname and getting individual id */}
               <div className="nick-name-form">
-                <label htmlFor="nick-name">Nick Name:</label>
+                <label htmlFor="nickName">Nick Name:</label>
                 <select
                   name="nickName"
-                  id="nick-name"
-                  onChange={(e) => setSelectedIndividual(e.target.value)}
+                  id="nickName"
+                  value={newSighting.individual_id}
+                  onChange={handleChange("individual_id")}
+                  required
                 >
                   <option value="null">Select One</option>
                   {individualsOfSpecies.map((ind) => (
@@ -84,28 +104,75 @@ const SightingForm = ({ setShow }) => {
                   ))}
                 </select>
               </div>
+
+              {/* getting isHealthy */}
               <div className="health-form">
-                <label htmlFor="health">Health Status</label>
-                <select name="health" id="health">
+                <label htmlFor="healthy">Health Status</label>
+                <select
+                  name="healthy"
+                  id="healthy"
+                  value={newSighting.healthy}
+                  onChange={handleChange("healthy")}
+                  required
+                >
                   <option value="null">Select One</option>
-                  <option value="healthy">Healthy</option>
-                  <option value="unhealthy">Unhealthy</option>
+                  <option value="true">Healthy</option>
+                  <option value="false">Unhealthy</option>
                 </select>
               </div>
 
               {/* INPUT OF TYPE DATETIME-LOCAL */}
               <div className="date-time-form">
-                <label htmlFor="date-time">Date and time of last seen</label>
+                <label htmlFor="dateTime">Date and time of last seen</label>
                 <input
                   type="datetime-local"
+                  name="dateTime"
+                  id="dateTime"
+                  value={newSighting.date_time}
+                  onChange={handleChange("date_time")}
                   // how do i restrict user from inputting a time later than the current time?
                   max={new Date().toISOString().slice(0, -8)}
+                  required
+                />
+              </div>
+              {/* LOCATION */}
+              <div className="location-form">
+                <label htmlFor="location">Location</label>
+                <textarea
+                  id="location"
+                  name="location"
+                  value={newSighting.location}
+                  onChange={handleChange("location")}
+                  required
+                />
+              </div>
+            </fieldset>
+
+            {/* OBSERVER INFO */}
+            <fieldset className="observer-info">
+              <legend>Please give observer information</legend>
+              <div className="email">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={addSighting.email}
+                  onChange={handleChange("email")}
+                  required
                 />
               </div>
             </fieldset>
             <div className="modal-footer">
-              <button className="btn btn-submit" onClick={() => setShow(false)}>
+              <button type="submit" className="btn btn-submit FormSubmit">
                 Submit
+              </button>
+              <button
+                type="button"
+                className="btn btn-close FormSubmit"
+                onClick={() => setShow(false)}
+              >
+                Close
               </button>
             </div>
           </form>

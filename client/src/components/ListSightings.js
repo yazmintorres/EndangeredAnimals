@@ -33,17 +33,19 @@ function ListSightings() {
           </tr>
         </thead>
         <tbody>
-          {sightings.map((sighting) => (
-            <SightingRow
-              key={sighting.sighting_id}
-              nickName={sighting.name}
-              commonName={sighting.common_name}
-              isHealthy={sighting.healthy}
-              lastSeen={sighting.last_seen}
-              location={sighting.location}
-              scientificName={sighting.scientific_name}
-            />
-          ))}
+          {sightings
+            .map((sighting) => (
+              <SightingRow
+                key={sighting.sighting_id}
+                nickName={sighting.name}
+                commonName={sighting.common_name}
+                isHealthy={sighting.healthy}
+                lastSeen={sighting.last_seen}
+                location={sighting.location}
+                scientificName={sighting.scientific_name}
+              />
+            ))
+            .reverse()}
         </tbody>
       </table>
     </div>
