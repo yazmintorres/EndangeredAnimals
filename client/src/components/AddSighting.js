@@ -7,9 +7,8 @@ function AddSighting() {
   const handleAddClick = () => setShow(!show);
 
   const addSighting = async (e, newSighting) => {
-    console.log(newSighting);
+    e.preventDefault();
     try {
-      e.preventDefault();
       const body = newSighting;
       const addSighting = await fetch(
         "http://localhost:8080/api/sighting/add",
