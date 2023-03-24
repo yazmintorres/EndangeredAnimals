@@ -4,6 +4,8 @@ function SightingRow({
   lastSeen,
   location,
   nickName,
+  sighting_id,
+  deleteSighting,
   scientificName,
 }) {
   return (
@@ -17,7 +19,12 @@ function SightingRow({
         <button className="btn btn-details">Details</button>
       </td>
       <td>
-        <button className="btn btn-delete">Delete</button>
+        <button
+          className="btn btn-delete"
+          onClick={() => deleteSighting(sighting_id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );

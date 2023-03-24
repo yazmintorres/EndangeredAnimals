@@ -14,6 +14,21 @@ function ListSightings() {
     }
   };
 
+  const deleteSighting = async (sighting_id) => {
+    try {
+      const deleteSighting = await fetch(
+        `http://localhost:8080/api/sighting/delete/${sighting_id}`,
+        { method: "DELETE" }
+      );
+      console.log(deleteSighting);
+      setSightings(
+        sightings.filter((sighting) => sighting.sighting_id !== sighting_id)
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getSightings();
   }, []);
@@ -37,12 +52,14 @@ function ListSightings() {
             .map((sighting) => (
               <SightingRow
                 key={sighting.sighting_id}
+                sighting_id={sighting.sighting_id}
                 nickName={sighting.name}
                 commonName={sighting.common_name}
                 isHealthy={sighting.healthy}
                 lastSeen={sighting.last_seen}
                 location={sighting.location}
                 scientificName={sighting.scientific_name}
+                deleteSighting={deleteSighting}
               />
             ))
             .reverse()}
