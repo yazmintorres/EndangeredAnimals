@@ -52,19 +52,20 @@ app.get("/api/individuals/:species_id", async (req, res) => {
   }
 });
 
-// create the POST request
-app.post("/api/students", cors(), async (req, res) => {
-  const newUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-  };
-  console.log([newUser.firstname, newUser.lastname]);
-  const result = await db.query(
-    "INSERT INTO students(firstname, lastname) VALUES($1, $2) RETURNING *",
-    [newUser.firstname, newUser.lastname]
-  );
-  console.log(result.rows[0]);
-  res.json(result.rows[0]);
+// ADD sighting to sightings table
+
+app.post("/api/sighting/add", async (req, res) => {
+  console.log(req.body);
+  try {
+    let { date_time, individual_id, location, healthy, email } = req.body;
+    const newSighting = await db.query(
+      "INSERT INTO sightings (date_time, individual_id, location, healthy, email) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [date_time, individual_id, location, healthy, email]
+    );
+    res.json(newSighting.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+  }
 });
 
 //A put request - Update a student
