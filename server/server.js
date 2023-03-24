@@ -68,31 +68,18 @@ app.post("/api/sighting/add", async (req, res) => {
   }
 });
 
-//A put request - Update a student
-app.put("/api/students/:studentId", cors(), async (req, res) => {
-  console.log(req.params);
-  //This will be the id that I want to find in the DB - the student to be updated
-  const studentId = req.params.studentId;
-  const updatedStudent = {
-    id: req.body.id,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-  };
-  console.log("In the server from the url - the student id", studentId);
-  console.log(
-    "In the server, from the react - the student to be edited",
-    updatedStudent
-  );
-  // UPDATE students SET lastname = "something" WHERE id="16";
-  const query = `UPDATE students SET lastname=$1, firstname=$2 WHERE id=${studentId} RETURNING *`;
-  const values = [updatedStudent.lastname, updatedStudent.firstname];
+// DELETE A SIGHTING
+
+app.delete("/api/sighting/delete/:sightingId", async (req, res) => {
   try {
-    const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
-    res.send(updated.rows[0]);
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ e });
+    let { sightingId } = req.params;
+    const deleteSighting = await db.query(
+      "DELETE FROM sightings WHERE sighting_id = $1",
+      [sightingId]
+    );
+    res.json(`Sighting with id ${sightingId} was deleted!`);
+  } catch (error) {
+    console.error(error.message);
   }
 });
 

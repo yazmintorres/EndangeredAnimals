@@ -131,7 +131,7 @@ const SightingForm = ({ setShow, addSighting }) => {
                   value={newSighting.date_time}
                   onChange={handleChange("date_time")}
                   // how do i restrict user from inputting a time later than the current time?
-                  max={new Date().toISOString().slice(0, -8)}
+                  max={new Date().toISOString().slice(0, -5)}
                   required
                 />
               </div>
