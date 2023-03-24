@@ -14,8 +14,10 @@ const SightingForm = ({ setShow, addSighting }) => {
   // create a state to keep track of the species -> this will store species_id number
   const [selectedSpecies, setSelectedSpecies] = useState(null);
 
-  // get all species and individuals of a certain species information --> these are arrays
+  // get all species for dropdown
   const [species, setSpecies] = useState([]);
+
+  // get all individuals of a certain species  --> array
   const [individualsOfSpecies, setIndividualsOfSpecies] = useState([]);
 
   // get species on first render
